@@ -1,5 +1,6 @@
 package com.openclassrooms.back.controllers;
 
+import java.security.Principal;
 import java.time.Instant;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -13,7 +14,8 @@ public class ChatController {
 
   @MessageMapping("/chat.send")
   @SendTo("/topic/messages")
-  public ChatMessage send(ChatMessage message) {
+  public ChatMessage send(ChatMessage message, Principal principal) {
+	  message.setSender(principal.getName());
     message.setTimestamp(Instant.now().toString());
     return message;
   }

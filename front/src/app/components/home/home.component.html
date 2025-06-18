@@ -1,0 +1,11 @@
+<h2>Choisissez un utilisateur</h2>
+
+<button (click)="loginAs('Alice Dupont', 'password')">
+  Se connecter en tant qu’Alice Dupont
+</button>
+
+<button (click)="loginAs('YCYW Service Client', 'admin')">
+  Se connecter en tant qu’Administrateur
+</button>
+
+<p *ngIf="error" style="color:red">{{ error }}</p>

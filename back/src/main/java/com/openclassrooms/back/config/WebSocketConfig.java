@@ -1,5 +1,6 @@
 package com.openclassrooms.back.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -10,10 +11,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+  @Autowired
+  private AuthHandshakeInterceptor authInterceptor;
+	
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint("/ws")
-            .setAllowedOriginPatterns("*") 
+            .setAllowedOriginPatterns("*")
+            .addInterceptors(authInterceptor)
             .withSockJS(); 
   }
 
@@ -22,4 +27,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.enableSimpleBroker("/topic"); 
     registry.setApplicationDestinationPrefixes("/app");
   }
+  
+  
+
 }
